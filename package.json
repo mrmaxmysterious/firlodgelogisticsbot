@@ -1,0 +1,24 @@
+{
+  "name": "main",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "canvas": "^2.8.0",
+    "discord-together": "^1.1.22",
+    "discord.js": "^12.5.3",
+    "ffmpeg-static": "^4.4.0",
+    "fs": "0.0.1-security",
+    "gtts": "^0.2.1",
+    "mongoose": "^5.13.3",
+    "node-fetch": "^2.6.1",
+    "opusscript": "0.0.8",
+    "ytdl": "^1.4.1"
+  }
+}

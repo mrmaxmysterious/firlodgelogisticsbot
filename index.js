@@ -4,27 +4,10 @@ const fetch = require("node-fetch")
 const prefix = "-"
 const fs = require("fs")
 const { DiscordTogether } = require("discord-together")
-const Canvas = require("canvas")
 const bans = require("./models/bans")
 const users = require("./models/users")
 const webhook = new Discord.WebhookClient("868111919221997568", "iNhKTtSuCjez8zAyxYn3nmqe9veSbQlOusWWnNZ2N44hzerWjCNLn2gg_BsCz2AYeu__")
 const currentlyplaying = require("./models/currentlyplaying");
-
-const applyText = (canvas, text) => {
-    const context = canvas.getContext('2d');
-
-    // Declare a base size of the font
-    let fontSize = 70;
-
-    do {
-        // Assign the font to the context and decrement it so it can be measured again
-        context.font = `${fontSize -= 10}px Snell Roundhand, cursive`;
-        // Compare pixel width of the text to the canvas minus the approximate avatar size
-    } while (context.measureText(text).width > canvas.width - 300);
-
-    // Return the result to use in the actual canvas
-    return context.font;
-};
 
 client.commands = new Discord.Collection()
 client.discordTogether = new DiscordTogether(client);
@@ -41,12 +24,6 @@ for (const file of commandFiles) {
 
 client.once("ready", async () => {
     let guild = client.guilds.cache.get("809561669856264192")
-    guild.channels.cache.get("868462275286143026").messages.fetch().then(messages => {
-        guild.channels.cache.get("868462275286143026").bulkDelete(parseInt(messages.size))
-    })
-    guild.channels.cache.get("868567412293894214").messages.fetch().then(messages => {
-        guild.channels.cache.get("868567412293894214").bulkDelete(parseInt(messages.size))
-    })
     let ready = new Discord.MessageEmbed()
         .setAuthor(client.user.tag, client.user.displayAvatarURL())
         .setDescription("Bot has logged into client.")
@@ -786,7 +763,7 @@ client.on("guildBanRemove", async (guild, user) => {
 
 client.on("voiceStateUpdate", async (old, neww) => {
     if (neww.member.bot) return;
-    if (!neww) return;
+    if (!neww.channel.id) return;
     if (neww.channel.id === "868464428910276608") {
         neww.channel.members.forEach(async member => {
             member.voice.setChannel("868440100349026394")
@@ -797,18 +774,11 @@ client.on("voiceStateUpdate", async (old, neww) => {
 })
 client.on("voiceStateUpdate", async (old, neww) => {
     if (old.member.bot) return;
-    if (!old) return;
+    if (!old.channel.id) return;
     if (old.channel.id === "868440100349026394") {
         old.member.roles.remove("868476914648616960")
     }
 })
-
-setInterval(() => {
-    let guild = client.guilds.cache.get("809561669856264192")
-    guild.channels.cache.get("868462275286143026").messages.fetch().then(messages => {
-        guild.channels.cache.get("868462275286143026").bulkDelete(parseInt(messages.size))
-    }).catch(err => err = err)
-}, 300000);
 
 client.mongoose.init()
 client.login("ODY3ODc1MzAwNTQwMTUzODk2.YPnd2w.FOs_PN4JlXuuvDSSZGlmbxXl3Z8");

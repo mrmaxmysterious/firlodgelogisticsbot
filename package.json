@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "canvas": "^2.8.0",
     "discord-together": "^1.1.22",
     "discord.js": "^12.5.3",
     "ffmpeg-static": "^4.4.0",
